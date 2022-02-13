@@ -16,6 +16,13 @@ const Home = () => {
   const products = [
     {
       name: 'Random Product',
+      image: '/images/review11.jpg',
+      price: 10,
+      rating: 5,
+      totalRating: 45,
+    },
+    {
+      name: 'Random Product',
       image: '/images/review5.jpg',
       price: 10,
       rating: 5,
