@@ -1,13 +1,4 @@
-import {
-  Box,
-  Center,
-  Flex,
-  HStack,
-  Image,
-  SimpleGrid,
-  Text,
-  VStack,
-} from '@chakra-ui/react'
+import { Box, HStack, Image, SimpleGrid, Text, VStack } from '@chakra-ui/react'
 
 const Categories = () => {
   const categories = [
@@ -17,13 +8,13 @@ const Categories = () => {
       products: [
         {
           name: 'Great Product',
-          price: 10,
+          price: 180,
           imageUrl: 'images/review2.jpg',
           tag: 'Trending Now',
         },
         {
           name: 'Great Product',
-          price: 20,
+          price: 290,
           imageUrl: 'images/review4.jpg',
           tag: 'Limited',
         },
@@ -36,13 +27,13 @@ const Categories = () => {
       products: [
         {
           name: 'Great Product',
-          price: 10,
+          price: 80,
           imageUrl: 'images/review6.jpg',
           tag: 'Free delivery',
         },
         {
           name: 'Great Product',
-          price: 20,
+          price: 90,
           imageUrl: 'images/review5.jpg',
           tag: 'New',
         },
@@ -55,13 +46,13 @@ const Categories = () => {
       products: [
         {
           name: 'Great Product',
-          price: 10,
+          price: 100,
           imageUrl: 'images/review9.jpg',
           tag: 'Limited',
         },
         {
           name: 'Great Product',
-          price: 20,
+          price: 60,
           imageUrl: 'images/review7.jpg',
           tag: 'Trending Now',
         },
@@ -72,10 +63,15 @@ const Categories = () => {
       icon: 'images/newArrival.png',
 
       products: [
-        { name: 'Great Product', price: 10, imageUrl: 'images/review8.jpg' },
         {
           name: 'Great Product',
-          price: 20,
+          price: 10,
+          imageUrl: 'images/review8.jpg',
+          tag: 'Limited',
+        },
+        {
+          name: 'Great Product',
+          price: 40,
           imageUrl: 'images/review4.jpg',
           tag: 'trending now',
         },
@@ -118,7 +114,7 @@ const Categories = () => {
                     _hover={{ transform: 'scale(1.05)' }}
                   />
 
-                  <VStack spacing="-1">
+                  <VStack spacing="-1" mt="1">
                     <Text
                       fontSize={['0.65rem', 'sm']}
                       fontWeight={['400', '500']}
