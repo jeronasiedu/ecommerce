@@ -24,9 +24,21 @@ code {
   .mySwiper {
     height: 20rem !important;
   }
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .no-display > :last-child {
+    display: none;
+  }
 }
 @media only screen and (max-width: 480px) {
   .mySwiper {
     height: 16rem !important;
   }
+}
+.cedi {
+  font-size: 0.7rem;
 }

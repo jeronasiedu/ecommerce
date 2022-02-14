@@ -1,14 +1,4 @@
-import {
-  Badge,
-  Box,
-  Flex,
-  IconButton,
-  Image,
-  Text,
-  Tooltip,
-} from '@chakra-ui/react'
-import { BsCartCheck } from 'react-icons/all'
-
+import { Badge, Box, Flex, Image, Text, Tooltip } from '@chakra-ui/react'
 const SingleProduct = ({ image, name, price, flashSale }) => {
   return (
     <Box
@@ -20,10 +10,11 @@ const SingleProduct = ({ image, name, price, flashSale }) => {
       rounded="md"
       cursor="pointer"
       transition="0.5s ease"
-      h={['13rem', '15rem']}
+      h={['12rem', '14rem']}
       _hover={{
         shadow: 'md',
       }}
+      pos="relative"
     >
       <Box w="100%" h="70%" mb="2" overflow="hidden" pos="relative">
         {flashSale && (
@@ -50,21 +41,10 @@ const SingleProduct = ({ image, name, price, flashSale }) => {
         />
       </Box>
       <Flex direction="column">
-        <Flex justify="space-between" align="center">
-          <Text fontWeight="600" fontSize={['sm', 'md']}>
-            {name}
-          </Text>
-          <Badge
-            colorScheme="cyan"
-            d="flex"
-            alignItems="center"
-            justifyContent="center"
-            p={['0.2', '0.5']}
-          >
-            <Text fontSize={['xs', 'md']}>${price}</Text>
-          </Badge>
-        </Flex>
-        <IconButton icon={<BsCartCheck />} alignSelf="flex-start" size="sm" />
+        <Text isTruncated>{name}</Text>
+        <Text colorScheme="blue" color="Background" alignSelf="flex-start">
+          GH₵{price}
+        </Text>
       </Flex>
     </Box>
   )

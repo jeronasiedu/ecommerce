@@ -1,37 +1,7 @@
-import {
-  Box,
-  Image,
-  HStack,
-  Flex,
-  VStack,
-  Text,
-  IconButton,
-  Divider,
-  List,
-  ListItem,
-  ListIcon,
-} from '@chakra-ui/react'
-import {
-  BiPhone,
-  GiTakeMyMoney,
-  IoTrendingUpSharp,
-  FaRecycle,
-  GiNestedHearts,
-  BiHomeAlt,
-  GiClothes,
-  CgSmartphone,
-  GiCircuitry,
-  GoDeviceCamera,
-} from 'react-icons/all'
+import { Box, Image } from '@chakra-ui/react'
+
 import { Swiper, SwiperSlide } from 'swiper/react'
-import {
-  Pagination,
-  Navigation,
-  Autoplay,
-  EffectFade,
-  EffectCube,
-  EffectFlip,
-} from 'swiper'
+import { Pagination, Navigation, Autoplay } from 'swiper'
 const Banner = () => {
   const images = [
     {
@@ -55,71 +25,11 @@ const Banner = () => {
       alt: 'picture',
     },
   ]
-  const rightBar = [
-    {
-      body: 'Help Center',
-      text: 'How can we help you?',
-      icon: <BiPhone />,
-    },
-    {
-      body: 'Sell on Jumia',
-      text: 'Make a lot of money',
-      icon: <GiTakeMyMoney />,
-    },
-    {
-      body: 'Trending',
-      text: 'The right ones for you',
-      icon: <IoTrendingUpSharp />,
-    },
-    {
-      body: 'Easy Return',
-      text: 'Up to 5 days',
-      icon: <FaRecycle />,
-    },
-    {
-      body: 'Find the Best',
-      text: 'Only the products you love',
-      icon: <GiNestedHearts />,
-    },
-  ]
-  const leftBar = [
-    {
-      body: 'Electronic',
-      text: 'Get in touch with our experts',
-      icon: <GiCircuitry />,
-    },
-    {
-      body: 'Phones',
-      text: 'Make a lot of money',
-      icon: <CgSmartphone />,
-    },
-    {
-      body: 'Accessories',
-      text: 'Only the products you love',
-      icon: <GoDeviceCamera />,
-    },
-    {
-      body: 'Clothes & Fashion',
-      text: 'The right ones for you',
-      icon: <GiClothes />,
-    },
-    {
-      body: 'Home & Office',
-      text: 'Up to 5 days',
-      icon: <BiHomeAlt />,
-    },
-  ]
+
   return (
     <Box w="100%" h="100%" py="3">
       <Swiper
-        modules={[
-          Pagination,
-          Navigation,
-          Autoplay,
-          EffectFade,
-          EffectCube,
-          EffectFlip,
-        ]}
+        modules={[Pagination, Navigation, Autoplay]}
         pagination={{
           dynamicBullets: true,
           clickable: true,
@@ -154,7 +64,6 @@ const SingleImage = ({ url, alt }) => (
     alt={alt}
     objectFit="cover"
     boxSize="100%"
-    borderRadius="sm"
     scrollSnapAlign="start"
     flex="1"
   />

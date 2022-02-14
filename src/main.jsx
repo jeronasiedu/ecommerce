@@ -4,15 +4,20 @@ import './index.css'
 import App from './App'
 import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react'
 import { BrowserRouter } from 'react-router-dom'
-
+import '@fontsource/poppins'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import 'swiper/css/autoplay'
-
+const theme = extendTheme({
+  fonts: {
+    body: 'poppins',
+    heading: 'poppins',
+  },
+})
 ReactDOM.render(
   <BrowserRouter>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode="light" />
       <App />
     </ChakraProvider>

@@ -9,7 +9,7 @@ function App() {
       <Navbar />
       <Container maxW="container.xl">
         <Banner />
-        {/* <Categories /> */}
+        <Categories />
         <Home />
       </Container>
     </>
