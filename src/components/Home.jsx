@@ -46,6 +46,13 @@ const Home = () => {
       rating: 3,
       totalRating: 69,
     },
+    {
+      name: 'Outdoor Sweater',
+      image: '/images/review13.jpg',
+      price: 45,
+      rating: 3,
+      totalRating: 69,
+    },
   ]
   return (
     <Box my="7">
@@ -54,13 +61,11 @@ const Home = () => {
           Just For You
         </Heading>
         <Box
-          flex="1"
-          h="2"
-          border="2px"
-          borderColor="gray.300"
+          color="gray.400"
           rounded="md"
+          className="line"
           d={['none', 'inline-flex']}
-        />
+        ></Box>
       </HStack>
       <SimpleGrid minChildWidth={['150px', '200px']} spacing={3} mb="2">
         {products.map((product, idx) => (

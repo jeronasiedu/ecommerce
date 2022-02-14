@@ -1,7 +1,19 @@
-import { Box, Image } from '@chakra-ui/react'
+import {
+  Box,
+  Circle,
+  Divider,
+  Flex,
+  Heading,
+  HStack,
+  Image,
+  Link,
+  Text,
+  VStack,
+} from '@chakra-ui/react'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination, Navigation, Autoplay } from 'swiper'
+import { Pagination, Navigation, Autoplay, EffectFade } from 'swiper'
+import { BiChevronRight } from 'react-icons/all'
 const Banner = () => {
   const images = [
     {
@@ -25,14 +37,78 @@ const Banner = () => {
       alt: 'picture',
     },
   ]
-
+  const categories = [
+    { name: 'Electronics', icon: 'images/electronics.png' },
+    { name: 'Apparel', icon: 'images/fashion.png' },
+    { name: 'Smart Phones', icon: 'images/mobile.png' },
+    { name: 'Services', icon: 'images/services.png' },
+    { name: 'All Categories', icon: 'images/all.png' },
+  ]
   return (
-    <Box w="100%" h="100%" py="3">
+    <Flex
+      w="100%"
+      my="3"
+      p="2"
+      bg=""
+      border="1px"
+      borderColor="gray.300"
+      rounded="sm"
+    >
+      <Box flex="0.4" px={2} d={['none', 'none', 'block']}>
+        <Box p="2" borderBottom="2px" borderColor="gray.400" rounded="sm">
+          <Link textTransform="uppercase" size="sm" pl="4" fontWeight="600">
+            My Market
+          </Link>
+        </Box>
+        <VStack mt="2" w="100%">
+          {categories.map((category, idx) => (
+            <Flex
+              alignSelf="flex-start"
+              align="center"
+              justify="space-between"
+              w="100%"
+              p="1"
+              key={idx}
+              cursor="pointer"
+              _hover={{
+                shadow: 'md',
+              }}
+              role="group"
+            >
+              <HStack>
+                <Circle
+                  w="2.2rem"
+                  bg="blackAlpha.100"
+                  h="2.2rem"
+                  overflow="hidden"
+                >
+                  <Image
+                    src={category.icon}
+                    alt={category.name}
+                    boxSize="100%"
+                  />
+                </Circle>
+                <Text
+                  _groupHover={{
+                    color: 'blue.600',
+                  }}
+                >
+                  {category.name}
+                </Text>
+              </HStack>
+              <BiChevronRight size={22} />
+            </Flex>
+          ))}
+        </VStack>
+      </Box>
       <Swiper
-        modules={[Pagination, Navigation, Autoplay]}
+        modules={[Pagination, Navigation, Autoplay, EffectFade]}
         pagination={{
           dynamicBullets: true,
           clickable: true,
+        }}
+        style={{
+          flex: '1',
         }}
         autoplay={{
           delay: 2500,
@@ -41,11 +117,7 @@ const Banner = () => {
         navigation={true}
         loop={true}
         speed={1000}
-        breakpoints={{
-          768: {
-            slidesPerView: 2,
-          },
-        }}
+        effect="fade"
       >
         {images.map((image, i) => (
           <SwiperSlide className="mySwiper" key={i}>
@@ -53,7 +125,7 @@ const Banner = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </Box>
+    </Flex>
   )
 }
 
@@ -64,7 +136,7 @@ const SingleImage = ({ url, alt }) => (
     alt={alt}
     objectFit="cover"
     boxSize="100%"
-    scrollSnapAlign="start"
     flex="1"
+    rounded="sm"
   />
 )

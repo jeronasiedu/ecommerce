@@ -6,10 +6,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+a {
+  text-decoration: none !important;
 }
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
@@ -39,6 +37,8 @@ code {
     height: 16rem !important;
   }
 }
-.cedi {
-  font-size: 0.7rem;
+.line {
+  border: 1.5px solid;
+  flex: 1;
+  height: 0.3rem;
 }

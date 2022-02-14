@@ -41,7 +41,7 @@ const Categories = () => {
     },
     {
       title: 'Ready to ship',
-      icon: 'images/newArrival.png',
+      icon: 'images/shipping.jpg',
 
       products: [
         {
@@ -78,14 +78,59 @@ const Categories = () => {
       ],
     },
   ]
+  const mobileCategories = [
+    { name: 'Apparel', imageUrl: 'images/fashion-mb.jpg' },
+    { name: 'Electronics', imageUrl: 'images/electronics-mb.jpg' },
+    { name: 'Smart Phones', imageUrl: 'images/iphone13.png' },
+    { name: 'Services', imageUrl: 'images/electronics-mb.jpg' },
+  ]
   return (
     <>
-      {/* <HStack bg="yellow" h="10rem" d={['flex', 'none']} mb="3">
-        Top Ranking
-      </HStack> */}
+      <HStack
+        h="10rem"
+        d={['flex', 'flex', 'none']}
+        overflowX="auto"
+        mb="3"
+        p="2"
+        overscrollBehavior={'contain'}
+        scrollSnapType="x mandatory"
+        scrollPaddingLeft={2}
+        border="1px"
+        rounded="sm"
+        borderColor="gray.300"
+      >
+        {mobileCategories.map((category, idx) => (
+          <Box
+            key={idx}
+            w={['9rem', '10rem']}
+            flexShrink={0}
+            h="100%"
+            roundedTop="sm"
+            overflow="hidden"
+            scrollSnapAlign="start"
+          >
+            <Text
+              textAlign="center"
+              fontSize="lg"
+              textTransform="uppercase"
+              fontWeight="600"
+              bg="blue.300"
+            >
+              {category.name}
+            </Text>
+            <Image
+              src={category.imageUrl}
+              objectFit="cover"
+              boxSize="100%"
+              alt={category.name}
+            />
+          </Box>
+        ))}
+      </HStack>
       <SimpleGrid columns={[2, 2, 3]} spacing={3} className="no-display">
         {categories.map((category, idx) => (
           <Box
+            key={idx}
             shadow="sm"
             px={1}
             rounded="sm"

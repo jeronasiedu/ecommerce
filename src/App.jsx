@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <Container maxW="container.xl">
+      <Container maxW="container.lg">
         <Banner />
         <Categories />
         <Home />
