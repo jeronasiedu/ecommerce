@@ -9,6 +9,7 @@ const Home = () => {
       price: 10,
       rating: 5,
       totalRating: 45,
+      id: 54,
     },
     {
       name: 'Labucq X Arrivals Irving Boot',
@@ -16,6 +17,7 @@ const Home = () => {
       price: 10,
       rating: 5,
       totalRating: 45,
+      id: 92,
     },
     {
       name: "Men's Canvas Sneakers ",
@@ -23,6 +25,7 @@ const Home = () => {
       price: 45,
       rating: 3,
       totalRating: 69,
+      id: 49,
     },
 
     {
@@ -31,6 +34,7 @@ const Home = () => {
       price: 45,
       rating: 3,
       totalRating: 69,
+      id: 77,
     },
     {
       name: 'Nike - Air Max 270 Sneakers',
@@ -38,6 +42,7 @@ const Home = () => {
       price: 45,
       rating: 3,
       totalRating: 69,
+      id: 35,
     },
     {
       name: 'Unisex Canvas',
@@ -45,6 +50,7 @@ const Home = () => {
       price: 45,
       rating: 3,
       totalRating: 69,
+      id: 17,
     },
     {
       name: 'Outdoor Sweater',
@@ -52,6 +58,7 @@ const Home = () => {
       price: 45,
       rating: 3,
       totalRating: 69,
+      id: 43,
     },
   ]
   return (

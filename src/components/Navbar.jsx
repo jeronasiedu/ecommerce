@@ -1,5 +1,4 @@
 import {
-  Box,
   Flex,
   HStack,
   IconButton,
@@ -13,13 +12,12 @@ import {
 } from '@chakra-ui/react'
 import {
   BiUser,
-  GiShoppingCart,
   MdOutlineDarkMode,
   MdOutlineLightMode,
   ImSearch,
-  BiMenu,
 } from 'react-icons/all'
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode()
   const [halfScrolled, setHalfScrolled] = useState(false)
@@ -48,17 +46,13 @@ const Navbar = () => {
       backdropFilter="blur(0.4rem)"
       shadow={halfScrolled ? 'md' : 'sm'}
       transition="0.5s cubic-bezier(0.23, 1, 0.320, 1)"
+      mb="2"
     >
       <HStack p="2" w="100%">
         <Flex w="100%" align="center">
-          <IconButton
-            icon={<BiMenu />}
-            size="sm"
-            mr="2"
-            variant="outline"
-            colorScheme="blue"
-          />
-          <Image src="/images/logo.png" w="1.9rem" alt="logo" />
+          <Link to="/">
+            <Image src="/images/logo.png" w="1.9rem" alt="logo" />
+          </Link>
           <Spacer />
           <InputGroup
             maxW={['17rem', '55%', '30rem']}
@@ -75,12 +69,6 @@ const Navbar = () => {
           </InputGroup>
           <Spacer />
           <HStack>
-            <IconButton
-              icon={<GiShoppingCart />}
-              size="sm"
-              colorScheme="blue"
-              variant="outline"
-            />
             <IconButton
               icon={<BiUser />}
               size="sm"
