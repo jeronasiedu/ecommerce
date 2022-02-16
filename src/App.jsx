@@ -4,7 +4,8 @@ import Home from './components/Home'
 import { Container } from '@chakra-ui/react'
 import Categories from './components/Categories'
 import { Routes, Route } from 'react-router-dom'
-import ProductDetails from '../Pages/ProductDetails'
+import ProductDetails from './Pages/ProductDetails'
+import Category from './Pages/Category'
 function App() {
   return (
     <>
@@ -22,6 +23,7 @@ function App() {
             }
           />
           <Route path="product/:name" element={<ProductDetails />} />
+          <Route path="category/:name" element={<Category />} />
         </Routes>
       </Container>
     </>

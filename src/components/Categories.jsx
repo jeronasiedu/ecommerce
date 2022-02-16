@@ -1,5 +1,5 @@
 import { Box, HStack, Image, SimpleGrid, Text, VStack } from '@chakra-ui/react'
-
+import { Link } from 'react-router-dom'
 const Categories = () => {
   const categories = [
     {
@@ -146,7 +146,14 @@ const Categories = () => {
             </HStack>
             <HStack w="100%" h="90%">
               {category.products.map((product, idx) => (
-                <Box w="100%" h="100%" key={idx} cursor="pointer">
+                <Box
+                  w="100%"
+                  h="100%"
+                  key={idx}
+                  cursor="pointer"
+                  as={Link}
+                  to={`product/${product.name.replace(/\s+/g, '-')}`}
+                >
                   <Image
                     src={product.imageUrl}
                     alt="image"

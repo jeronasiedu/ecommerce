@@ -1,12 +1,9 @@
 import {
   Box,
   Circle,
-  Divider,
   Flex,
-  Heading,
   HStack,
   Image,
-  Link,
   Text,
   VStack,
 } from '@chakra-ui/react'
@@ -14,6 +11,7 @@ import {
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Navigation, Autoplay, EffectFade } from 'swiper'
 import { BiChevronRight } from 'react-icons/all'
+import { Link } from 'react-router-dom'
 const Banner = () => {
   const images = [
     {
@@ -42,7 +40,6 @@ const Banner = () => {
     { name: 'Apparel', icon: 'images/fashion.png' },
     { name: 'Smart Phones', icon: 'images/mobile.png' },
     { name: 'Services', icon: 'images/services.png' },
-    { name: 'All Categories', icon: 'images/all.png' },
   ]
   return (
     <Flex
@@ -56,9 +53,9 @@ const Banner = () => {
     >
       <Box flex="0.4" px={2} d={['none', 'none', 'block']}>
         <Box p="2" borderBottom="2px" borderColor="gray.400" rounded="sm">
-          <Link textTransform="uppercase" size="sm" pl="4" fontWeight="600">
+          <Text textTransform="uppercase" size="sm" pl="4" fontWeight="600">
             My Market
-          </Link>
+          </Text>
         </Box>
         <VStack mt="2" w="100%">
           {categories.map((category, idx) => (
@@ -74,6 +71,10 @@ const Banner = () => {
                 shadow: 'md',
               }}
               role="group"
+              as={Link}
+              to={`category/${category.name
+                .replace(/\s+/g, '-')
+                .toLowerCase()}`}
             >
               <HStack>
                 <Circle

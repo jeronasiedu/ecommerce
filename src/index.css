@@ -42,3 +42,17 @@ a {
   flex: 1;
   height: 0.3rem;
 }
+/* USER PROFILE */
+.user-profile:hover .user-profile-box {
+  opacity: 1;
+  transition: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateY(-0.2rem);
+  pointer-events: all;
+}
+.user-profile-box {
+  transition: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0;
+  z-index: 100;
+  transform: translateY(2.5rem);
+  pointer-events: none;
+}

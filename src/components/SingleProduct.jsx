@@ -45,7 +45,7 @@ const SingleProduct = ({ image, name, price, flashSale, id }) => {
         </Box>
         <Flex direction="column">
           <Text isTruncated>{name}</Text>
-          <Text colorScheme="blue" color="Background" alignSelf="flex-start">
+          <Text color="blue.400" alignSelf="flex-start">
             GH₵{price}
           </Text>
         </Flex>

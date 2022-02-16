@@ -86,7 +86,6 @@ const Cart = () => {
                 alt="Review Image"
                 objectFit="cover"
               />
-
               <Button
                 pos="absolute"
                 top="0"

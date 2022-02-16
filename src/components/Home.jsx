@@ -79,6 +79,22 @@ const Home = () => {
           <SingleProduct {...product} key={idx} />
         ))}
       </SimpleGrid>
+      <HStack mt="5">
+        <Heading mb="2" size="md" textTransform="uppercase">
+          Trending Ads
+        </Heading>
+        <Box
+          color="gray.400"
+          rounded="md"
+          className="line"
+          d={['none', 'inline-flex']}
+        ></Box>
+      </HStack>
+      <SimpleGrid minChildWidth={['150px', '200px']} spacing={3} mb="2">
+        {products.map((product, idx) => (
+          <SingleProduct {...product} key={idx} />
+        ))}
+      </SimpleGrid>
     </Box>
   )
 }
