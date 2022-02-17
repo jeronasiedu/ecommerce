@@ -117,7 +117,6 @@ const Banner = () => {
         }}
         navigation={true}
         loop={true}
-        speed={1000}
         effect="fade"
       >
         {images.map((image, i) => (

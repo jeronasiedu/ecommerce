@@ -12,6 +12,9 @@ a {
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+html {
+  scroll-behavior: smooth;
+}
 
 /* SWIPER */
 .mySwiper {

@@ -90,9 +90,9 @@ const Categories = () => {
         h="10rem"
         d={['flex', 'flex', 'none']}
         overflowX="auto"
+        overflowY={'hidden'}
         mb="3"
         p="2"
-        overscrollBehavior={'contain'}
         scrollSnapType="x mandatory"
         scrollPaddingLeft={2}
         border="1px"
@@ -108,6 +108,8 @@ const Categories = () => {
             roundedTop="sm"
             overflow="hidden"
             scrollSnapAlign="start"
+            as={Link}
+            to={`category/${category.name.replace(/\s+/g, '-').toLowerCase()}`}
           >
             <Text
               textAlign="center"
@@ -118,6 +120,7 @@ const Categories = () => {
             >
               {category.name}
             </Text>
+
             <Image
               src={category.imageUrl}
               objectFit="cover"

@@ -66,7 +66,7 @@ const Navbar = () => {
   ]
   const navIcons = [
     {
-      label: 'Save',
+      label: 'Saved',
       icon: <BsSave />,
     },
     {
@@ -112,7 +112,7 @@ const Navbar = () => {
         top="0"
         left="0"
         zIndex="1000"
-        bg="whiteAlpha.300"
+        bg="white"
         pb={['2', '0']}
         backdropFilter="blur(0.4rem)"
         transition="0.5s cubic-bezier(0.23, 1, 0.320, 1)"
@@ -120,7 +120,14 @@ const Navbar = () => {
         shadow={halfScrolled ? 'md' : 'sm'}
       >
         <HStack p="2" w="100%">
-          <Text>Logo</Text>
+          <Box minW="5.2rem" w="5.2rem" as={Link} to="/">
+            <Image
+              src="images/logo1.png"
+              alt="My logo"
+              objectFit={'cover'}
+              boxSize="100%"
+            />
+          </Box>
           <Spacer />
           <InputGroup
             maxW={['17rem', '75%', '30rem']}
@@ -132,7 +139,11 @@ const Navbar = () => {
             />
             <Input
               type="search"
-              placeholder="Search for products, brands and categories"
+              placeholder="Search products, brands and categories"
+              _placeholder={{
+                fontSize: 'sm',
+                color: 'blackAlpha.900',
+              }}
             />
           </InputGroup>
           <Spacer />
@@ -181,7 +192,7 @@ const Navbar = () => {
             </Box>
             {!mobile && (
               <Button size="sm" px="5" rounded="sm">
-                Sell
+                SELL
               </Button>
             )}
           </HStack>

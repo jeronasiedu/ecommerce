@@ -1,7 +1,7 @@
 import { Badge, Box, Flex, Image, Text, Tooltip } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 const SingleProduct = ({ image, name, price, flashSale, id }) => {
-  let url = `product/${name.replace(/\s+/g, '-')}?id=${id}`
+  let url = `/product/${name.replace(/\s+/g, '-')}?id=${id}`
   return (
     <Link to={url}>
       <Box
