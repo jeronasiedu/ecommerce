@@ -18,9 +18,9 @@ import {
   List,
   ListItem,
   ListIcon,
+  useDisclosure,
 } from '@chakra-ui/react'
 import {
-  BiUser,
   MdOutlineDarkMode,
   MdOutlineLightMode,
   ImSearch,
@@ -38,14 +38,22 @@ import {
   BsBookmarkHeart,
 } from 'react-icons/all'
 import { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import RegisterModal from './Modal'
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode()
+  const navigate = useNavigate()
   const [halfScrolled, setHalfScrolled] = useState(false)
   const [mobile] = useMediaQuery('(max-width: 768px)')
   const bottomNavRef = useRef('')
   const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY)
   const [showNav, setShowNav] = useState(false)
+  const [user, setUser] = useState(false)
+  const [hideInput, setHideInput] = useState(false)
+  const [placeholderText, setPlaceholderText] = useState(
+    'Search products, brands and categories'
+  )
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const hoverItems = [
     {
       name: 'My page',
@@ -105,6 +113,47 @@ const Navbar = () => {
       window.removeEventListener('scroll', hideBottomNav)
     }
   }, [window.scrollY])
+  // NAVIGATING USER IF LOGIN
+  const navigateToProfile = () => {
+    if (!user) {
+      onOpen()
+      return
+    }
+    navigate('/profile')
+  }
+  // CHECK LOCATION TO REMOVE SEARCH BAR
+  const { pathname } = useLocation()
+
+  const generatePlaceholder = () => {
+    const availableCategories = [
+      'electronics',
+      'mobile',
+      'smart-phones',
+      'apparel',
+      'services',
+    ]
+    if (
+      pathname !== '/' &&
+      availableCategories.includes(pathname.split('/')[2])
+    ) {
+      const category = pathname.split('/')[2].replace(/-/g, ' ')
+      setPlaceholderText(`Search in ${category}`)
+    } else {
+      setPlaceholderText(`Search products, brands and categories`)
+    }
+  }
+  const hideInputField = () => {
+    if (pathname.includes('profile')) {
+      setHideInput(true)
+    } else {
+      setHideInput(false)
+    }
+  }
+  useEffect(() => {
+    generatePlaceholder()
+    hideInputField()
+  }, [pathname])
+
   return (
     <>
       <VStack
@@ -119,6 +168,7 @@ const Navbar = () => {
         mb="2"
         shadow={halfScrolled ? 'md' : 'sm'}
       >
+        <RegisterModal isOpen={isOpen} onClose={onClose} mobile={mobile} />
         <HStack p="2" w="100%">
           <Box minW="5.2rem" w="5.2rem" as={Link} to="/">
             <Image
@@ -129,85 +179,128 @@ const Navbar = () => {
             />
           </Box>
           <Spacer />
-          <InputGroup
-            maxW={['17rem', '75%', '30rem']}
-            d={['none', 'none', 'inline-flex']}
-          >
+          {/* INPUT FIELD */}
+          {!hideInput && (
+            <InputGroup
+              maxW={['17rem', '75%', '30rem']}
+              d={['none', 'none', 'inline-flex']}
+            >
+              <InputLeftElement
+                pointerEvents="none"
+                children={<ImSearch color="gray.300" />}
+              />
+              <Input
+                type="search"
+                placeholder={placeholderText}
+                _placeholder={{
+                  fontSize: 'sm',
+                  color: 'blackAlpha.900',
+                }}
+              />
+            </InputGroup>
+          )}
+
+          <Spacer />
+
+          {user ? (
+            <HStack>
+              {!mobile &&
+                navIcons.map((item, idx) => (
+                  <Tooltip label={item.label} key={idx}>
+                    <IconButton icon={item.icon} size="sm" />
+                  </Tooltip>
+                ))}
+              <Tooltip label="Adverts">
+                <IconButton icon={<HiOutlineViewGridAdd />} size="sm" />
+              </Tooltip>
+              <Spacer />
+              {mobile ? (
+                <Avatar
+                  size="sm"
+                  src="/images/user.jpg"
+                  onClick={navigateToProfile}
+                />
+              ) : (
+                <Box pos="relative" cursor="pointer" className="user-profile">
+                  <Avatar size="sm" src="/images/user.jpg" />
+                  <Box
+                    shadow="lg"
+                    w="9rem"
+                    pos="absolute"
+                    top="9"
+                    rounded={'md'}
+                    overflow="hidden"
+                    left={['-7rem', '-6rem']}
+                    className="user-profile-box"
+                    bg="white"
+                  >
+                    <List w="100%" spacing="2">
+                      {hoverItems.map((item, i) => (
+                        <ListItem
+                          key={i}
+                          fontSize="sm"
+                          color="gray.500"
+                          p="2"
+                          _hover={{
+                            bg: 'gray.300',
+                            color: 'black',
+                          }}
+                        >
+                          <ListIcon as={item.icon} color="blue.500" />
+                          {item.name}
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Box>
+                </Box>
+              )}
+              {!mobile && (
+                <Button size="sm" px="5" rounded="sm">
+                  SELL
+                </Button>
+              )}
+            </HStack>
+          ) : (
+            <HStack>
+              {mobile ? (
+                <Avatar size="sm" onClick={navigateToProfile} />
+              ) : (
+                <HStack>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    colorScheme="facebook"
+                    textTransform="uppercase"
+                    rounded="sm"
+                    onClick={onOpen}
+                  >
+                    Sign In
+                  </Button>
+                  <Button
+                    size="sm"
+                    px="2rem"
+                    textTransform="uppercase"
+                    rounded="sm"
+                    onClick={onOpen}
+                  >
+                    Sell
+                  </Button>
+                </HStack>
+              )}
+            </HStack>
+          )}
+        </HStack>
+        {!hideInput && (
+          <InputGroup display={['block', 'block', 'none']} maxW="95%">
             <InputLeftElement
               pointerEvents="none"
               children={<ImSearch color="gray.300" />}
             />
-            <Input
-              type="search"
-              placeholder="Search products, brands and categories"
-              _placeholder={{
-                fontSize: 'sm',
-                color: 'blackAlpha.900',
-              }}
-            />
+            <Input type="search" placeholder={placeholderText} />
           </InputGroup>
-          <Spacer />
-          <HStack>
-            {!mobile &&
-              navIcons.map((item, idx) => (
-                <Tooltip label={item.label} key={idx}>
-                  <IconButton icon={item.icon} size="sm" />
-                </Tooltip>
-              ))}
-            <Tooltip label="Adverts">
-              <IconButton icon={<HiOutlineViewGridAdd />} size="sm" />
-            </Tooltip>
-            <Spacer />
-            <Box pos="relative" cursor="pointer" className="user-profile">
-              <Avatar size="sm" />
-              <Box
-                shadow="lg"
-                w="9rem"
-                pos="absolute"
-                top="9"
-                rounded={'md'}
-                overflow="hidden"
-                left={['-7rem', '-6rem']}
-                className="user-profile-box"
-                bg="white"
-              >
-                <List w="100%" spacing="2">
-                  {hoverItems.map((item, i) => (
-                    <ListItem
-                      key={i}
-                      fontSize="sm"
-                      color="gray.500"
-                      p="2"
-                      _hover={{
-                        bg: 'gray.300',
-                        color: 'black',
-                      }}
-                    >
-                      <ListIcon as={item.icon} color="blue.500" />
-                      {item.name}
-                    </ListItem>
-                  ))}
-                </List>
-              </Box>
-            </Box>
-            {!mobile && (
-              <Button size="sm" px="5" rounded="sm">
-                SELL
-              </Button>
-            )}
-          </HStack>
-        </HStack>
-        <InputGroup display={['block', 'block', 'none']} maxW="95%">
-          <InputLeftElement
-            pointerEvents="none"
-            children={<ImSearch color="gray.300" />}
-          />
-          <Input
-            type="search"
-            placeholder="Search for products, brands and categories"
-          />
-        </InputGroup>
+        )}
       </VStack>
+      {/* BOTTOM NAVIGATION */}
       {mobile && (
         <Flex
           pos="fixed"

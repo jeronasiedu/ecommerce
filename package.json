@@ -21,6 +21,7 @@
     "react-router-dom": "^6.2.1",
     "react-select": "^5.2.2",
     "react-slick": "^0.28.1",
+    "react-step-wizard": "^5.3.11",
     "swiper": "^8.0.5"
   },
   "devDependencies": {

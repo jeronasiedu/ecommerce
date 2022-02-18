@@ -10,12 +10,13 @@ import {
   Button,
   SimpleGrid,
 } from '@chakra-ui/react'
-import { useSearchParams, useParams } from 'react-router-dom'
-import { IoIosArrowDown, RiListSettingsLine, GoLocation } from 'react-icons/all'
+import { useSearchParams, useParams, useNavigate } from 'react-router-dom'
+import { IoIosArrowDown, BiChevronLeft } from 'react-icons/all'
 import Select from 'react-select'
 import { useState } from 'react'
 import SingleProduct from '../components/SingleProduct'
 const Category = () => {
+  const navigate = useNavigate()
   let { name } = useParams()
   name = name.replace(/-/g, ' ').toUpperCase()
   const options = [
@@ -81,18 +82,27 @@ const Category = () => {
   const [expand, setExpand] = useState(false)
   return (
     <VStack w="100%" alignItems="flex-start">
-      <Box rounded="md" bg="blackAlpha.100" px="2">
-        <Text color="gray.600">
-          344 results for {''}
-          <span
-            style={{
-              fontWeight: '600',
-            }}
-          >
-            {name}
-          </span>
-        </Text>
-      </Box>
+      <HStack justifyContent="space-between" w="full">
+        <IconButton
+          icon={<BiChevronLeft size={20} />}
+          size="sm"
+          variant="outline"
+          d={['inline-flex', 'inline-flex', 'none']}
+          onClick={() => navigate(-1)}
+        />
+        <Box rounded="md" border="1px" borderColor="gray.300" px="2">
+          <Text color="gray.600">
+            344 results for {''}
+            <span
+              style={{
+                fontWeight: '600',
+              }}
+            >
+              {name}
+            </span>
+          </Text>
+        </Box>
+      </HStack>
       <Flex w="full" flexDirection={['column', 'row']} gap="2">
         <VStack
           w="full"

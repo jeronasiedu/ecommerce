@@ -163,11 +163,7 @@ const Cart = () => {
                     <GoLocation />
                     <Text>Eastern Region, Atiwa</Text>
                   </HStack>
-                  <HStack
-                    w="100%"
-                    justifyContent="space-between"
-                    colorScheme="blue"
-                  >
+                  <HStack w="100%" justifyContent="space-between">
                     <Button
                       colorScheme="blue"
                       variant="outline"
@@ -329,7 +325,7 @@ const Cart = () => {
               <List>
                 {tips.map((tip, i) => (
                   <ListItem key={i} fontSize="sm">
-                    <ListIcon as={MdCheckCircle} color="green.500" size="sm" />
+                    <ListIcon as={MdCheckCircle} color="green.500" />
                     {tip}
                   </ListItem>
                 ))}
