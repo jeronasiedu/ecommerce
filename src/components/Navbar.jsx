@@ -48,7 +48,7 @@ const Navbar = () => {
   const bottomNavRef = useRef('')
   const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY)
   const [showNav, setShowNav] = useState(false)
-  const [user, setUser] = useState(false)
+  const [user, setUser] = useState(true)
   const [hideInput, setHideInput] = useState(false)
   const [placeholderText, setPlaceholderText] = useState(
     'Search products, brands and categories'
@@ -143,7 +143,7 @@ const Navbar = () => {
     }
   }
   const hideInputField = () => {
-    if (pathname.includes('profile')) {
+    if (pathname.includes('profile') || pathname.includes('sell')) {
       setHideInput(true)
     } else {
       setHideInput(false)
@@ -255,7 +255,12 @@ const Navbar = () => {
                 </Box>
               )}
               {!mobile && (
-                <Button size="sm" px="5" rounded="sm">
+                <Button
+                  size="sm"
+                  px="5"
+                  rounded="sm"
+                  onClick={() => navigate('/sell')}
+                >
                   SELL
                 </Button>
               )}

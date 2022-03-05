@@ -59,3 +59,8 @@ html {
   transform: translateY(2.5rem);
   pointer-events: none;
 }
+/* SELECT COMPONENT */
+.select-mobile {
+  width: 100%;
+  margin-inline: auto;
+}

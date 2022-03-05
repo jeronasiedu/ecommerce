@@ -15,11 +15,18 @@ const theme = extendTheme({
     body: 'poppins',
     heading: 'poppins',
   },
+  config: {
+    initialColorMode: 'light',
+    useSystemColorMode: false,
+  },
 })
+
 ReactDOM.render(
   <BrowserRouter>
     <ChakraProvider theme={theme}>
-      <ColorModeScript initialColorMode="light" />
+      <ColorModeScript
+        initialColorMode={theme.config.initialColorMode}
+      ></ColorModeScript>
       <App />
     </ChakraProvider>
   </BrowserRouter>,
