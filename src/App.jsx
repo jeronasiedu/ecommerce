@@ -8,6 +8,9 @@ import ProductDetails from './Pages/ProductDetails'
 import Category from './Pages/Category'
 import Sell from './Pages/Sell'
 import Profile from './Pages/Profile'
+import Saved from './components/Saved'
+import Messages from './components/Messages'
+import Adverts from './components/Adverts'
 function App() {
   return (
     <>
@@ -27,7 +30,10 @@ function App() {
           <Route path="product/:name" element={<ProductDetails />} />
           <Route path="category/:name" element={<Category />} />
           <Route path="sell" element={<Sell />} />
+          <Route path="saved" element={<Saved />} />
+          <Route path="messages" element={<Messages />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="adverts" element={<Adverts />} />
         </Routes>
       </Container>
     </>

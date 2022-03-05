@@ -40,6 +40,7 @@ import {
 import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import RegisterModal from './Modal'
+import logo from '../logo.png'
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode()
   const navigate = useNavigate()
@@ -48,8 +49,9 @@ const Navbar = () => {
   const bottomNavRef = useRef('')
   const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY)
   const [showNav, setShowNav] = useState(false)
-  const [user, setUser] = useState(true)
+  const [user, setUser] = useState(false)
   const [hideInput, setHideInput] = useState(false)
+
   const [placeholderText, setPlaceholderText] = useState(
     'Search products, brands and categories'
   )
@@ -76,22 +78,20 @@ const Navbar = () => {
     {
       label: 'Saved',
       icon: <BsSave />,
+      to: 'saved',
     },
     {
       label: 'Messages',
       icon: <BsChatLeftText />,
-    },
-    {
-      label: 'Notifications',
-      icon: <IoMdNotificationsOutline />,
+      to: 'messages',
     },
   ]
   const mobileNavIcons = [
-    { name: 'Home', icon: <GoHome size={20} /> },
-    { name: 'Saved', icon: <BsBookmarkHeart size={20} /> },
-    { name: 'Sell', icon: <GiSellCard size={20} /> },
-    { name: 'Messages', icon: <BsChatLeftText size={20} /> },
-    { name: 'Profile', icon: <FaRegUserCircle size={20} /> },
+    { name: 'Home', icon: <GoHome size={20} />, to: '/' },
+    { name: 'Saved', icon: <BsBookmarkHeart size={20} />, to: 'saved' },
+    { name: 'Sell', icon: <GiSellCard size={20} />, to: 'sell' },
+    { name: 'Messages', icon: <BsChatLeftText size={20} />, to: 'messages' },
+    { name: 'Profile', icon: <FaRegUserCircle size={20} />, to: 'profile' },
   ]
   const hideBottomNav = () => {
     let currentScrollPos = window.scrollY
@@ -121,6 +121,13 @@ const Navbar = () => {
     }
     navigate('/profile')
   }
+  const handleMobileNavigation = (to) => {
+    if (!user) {
+      onOpen()
+      return
+    }
+    navigate(to)
+  }
   // CHECK LOCATION TO REMOVE SEARCH BAR
   const { pathname } = useLocation()
 
@@ -143,7 +150,13 @@ const Navbar = () => {
     }
   }
   const hideInputField = () => {
-    if (pathname.includes('profile') || pathname.includes('sell')) {
+    const hideField = ['profile', 'sell', 'messages', 'saved']
+    if (
+      pathname.includes('profile') ||
+      pathname.includes('sell') ||
+      pathname.includes('messages') ||
+      pathname.includes('saved')
+    ) {
       setHideInput(true)
     } else {
       setHideInput(false)
@@ -168,11 +181,16 @@ const Navbar = () => {
         mb="2"
         shadow={halfScrolled ? 'md' : 'sm'}
       >
-        <RegisterModal isOpen={isOpen} onClose={onClose} mobile={mobile} />
+        <RegisterModal
+          isOpen={isOpen}
+          onClose={onClose}
+          mobile={mobile}
+          setUser={setUser}
+        />
         <HStack p="2" w="100%">
           <Box minW="5.2rem" w="5.2rem" as={Link} to="/">
             <Image
-              src="images/logo1.png"
+              src={logo}
               alt="My logo"
               objectFit={'cover'}
               boxSize="100%"
@@ -207,11 +225,21 @@ const Navbar = () => {
               {!mobile &&
                 navIcons.map((item, idx) => (
                   <Tooltip label={item.label} key={idx}>
-                    <IconButton icon={item.icon} size="sm" />
+                    <IconButton
+                      icon={item.icon}
+                      size="sm"
+                      rounded="sm"
+                      onClick={() => handleMobileNavigation(item.to)}
+                    />
                   </Tooltip>
                 ))}
               <Tooltip label="Adverts">
-                <IconButton icon={<HiOutlineViewGridAdd />} size="sm" />
+                <IconButton
+                  icon={<HiOutlineViewGridAdd />}
+                  size="sm"
+                  rounded="sm"
+                  onClick={() => handleMobileNavigation('adverts')}
+                />
               </Tooltip>
               <Spacer />
               {mobile ? (
@@ -323,7 +351,11 @@ const Navbar = () => {
           transition="0.5s  cubic-bezier(0.165, 0.840, 0.440, 1.000)"
         >
           {mobileNavIcons.map((item, idx) => (
-            <VStack spacing="0" key={idx}>
+            <VStack
+              spacing="0"
+              key={idx}
+              onClick={() => handleMobileNavigation(item.to)}
+            >
               <IconButton icon={item.icon} size="sm" variant="ghost" />
               <Text fontSize="xs">{item.name}</Text>
             </VStack>

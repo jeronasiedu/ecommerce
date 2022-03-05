@@ -10,7 +10,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { BsGoogle, MdEmail } from 'react-icons/all'
-function RegisterModal({ isOpen, onClose, mobile }) {
+function RegisterModal({ isOpen, onClose, mobile, setUser }) {
   return (
     <>
       <Modal
@@ -34,6 +34,11 @@ function RegisterModal({ isOpen, onClose, mobile }) {
                 w="full"
                 colorScheme="blue"
                 rounded="sm"
+                // TODO: Remove this
+                onClick={() => {
+                  setUser(true)
+                  onClose()
+                }}
               >
                 Sign In via Google
               </Button>
@@ -42,6 +47,11 @@ function RegisterModal({ isOpen, onClose, mobile }) {
                 w="full"
                 variant="outline"
                 rounded="sm"
+                // TODO: Remove this
+                onClick={() => {
+                  setUser(true)
+                  onClose()
+                }}
               >
                 Continue with Email
               </Button>

@@ -12,6 +12,7 @@ import {
 import Select from 'react-select'
 import { useState } from 'react'
 import { BiChevronLeft, ImImage } from 'react-icons/all'
+import { useNavigate } from 'react-router-dom'
 const Sell = () => {
   const [mobile] = useMediaQuery('(max-width:760px)')
   const categories = [
@@ -57,6 +58,7 @@ const Sell = () => {
   )
 }
 const MobileSellScreen = ({ categories, setSelectedCategory }) => {
+  const navigate = useNavigate()
   return (
     <Box shadow="md" w="100%" bg="white" h="25rem" mx="auto" p={3}>
       <HStack mb={2} w="full">
@@ -66,6 +68,7 @@ const MobileSellScreen = ({ categories, setSelectedCategory }) => {
           variant="outline"
           colorScheme="linkedin"
           rounded="sm"
+          onClick={() => navigate(-1)}
         />
         <Spacer />
         <Button size="sm" rounded="sm" variant="outline" colorScheme="red">
