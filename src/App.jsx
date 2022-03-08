@@ -30,8 +30,24 @@ function App() {
             </>
           }
         />
-        <Route path="product/:name" element={<ProductDetails />} />
-        <Route path="category/:name" element={<Category />} />
+        <Route
+          path="product/:name"
+          element={
+            <>
+              <Navigation />
+              <ProductDetails />
+            </>
+          }
+        />
+        <Route
+          path="category/:name"
+          element={
+            <>
+              <Navigation type="category" />
+              <Category />
+            </>
+          }
+        />
         <Route path="sell" element={<Protect target={<Sell />} />} />
         <Route path="saved" element={<Protect target={<Saved />} />} />
         <Route path="profile" element={<Protect target={<Profile />} />} />
