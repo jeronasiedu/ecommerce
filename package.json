@@ -22,7 +22,8 @@
     "react-select": "^5.2.2",
     "react-slick": "^0.28.1",
     "react-step-wizard": "^5.3.11",
-    "swiper": "^8.0.5"
+    "swiper": "^8.0.5",
+    "zustand": "^3.7.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.0.0",

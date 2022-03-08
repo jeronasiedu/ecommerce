@@ -3,14 +3,15 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   Button,
   VStack,
 } from '@chakra-ui/react'
 import { BsGoogle, MdEmail } from 'react-icons/all'
-function RegisterModal({ isOpen, onClose, mobile, setUser }) {
+import useStore from '../utils/store'
+function RegisterModal({ isOpen, onClose, mobile }) {
+  const updateUser = useStore((state) => state.updateUser)
   return (
     <>
       <Modal
@@ -36,7 +37,7 @@ function RegisterModal({ isOpen, onClose, mobile, setUser }) {
                 rounded="sm"
                 // TODO: Remove this
                 onClick={() => {
-                  setUser(true)
+                  updateUser()
                   onClose()
                 }}
               >
@@ -49,7 +50,7 @@ function RegisterModal({ isOpen, onClose, mobile, setUser }) {
                 rounded="sm"
                 // TODO: Remove this
                 onClick={() => {
-                  setUser(true)
+                  updateUser()
                   onClose()
                 }}
               >

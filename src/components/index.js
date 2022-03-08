@@ -1,0 +1,6 @@
+export { default as Saved } from './Saved'
+export { default as Navigation } from './Navigation'
+export { default as Adverts } from './Adverts'
+export { default as Banner } from './Banner'
+export { default as Categories } from './Categories'
+export { default as Home } from './Home'

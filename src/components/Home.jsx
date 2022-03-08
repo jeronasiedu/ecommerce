@@ -52,14 +52,6 @@ const Home = () => {
       totalRating: 69,
       id: 17,
     },
-    {
-      name: 'Outdoor Sweater',
-      image: '/images/review13.jpg',
-      price: 45,
-      rating: 3,
-      totalRating: 69,
-      id: 43,
-    },
   ]
   return (
     <Box my="7">
