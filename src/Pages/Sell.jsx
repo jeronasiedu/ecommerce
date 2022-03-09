@@ -19,12 +19,13 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  Textarea,
 } from '@chakra-ui/react'
 import Select from 'react-select'
 import { useState } from 'react'
 import { MdCancel, ImImage } from 'react-icons/all'
 import { useNavigate } from 'react-router-dom'
-import { GoLocation } from 'react-icons/all'
+import { GoLocation, FaRegUser, GoPackage } from 'react-icons/all'
 const Sell = () => {
   const [mobile] = useMediaQuery('(max-width:760px)')
   const categories = [
@@ -34,28 +35,7 @@ const Sell = () => {
     { value: 'Services', label: 'Services' },
   ]
   const [selectedCategory, setSelectedCategory] = useState(null)
-  const locations = [
-    {
-      value: 'Ayeduase',
-      label: 'Ayeduase',
-    },
-    {
-      value: 'Engineering Gate',
-      label: 'Engineering Gate',
-    },
-    {
-      value: 'Queens Hall',
-      label: 'Queens Hall',
-    },
-    {
-      value: 'Indece Hall',
-      label: 'Indece',
-    },
-    {
-      value: 'Republic Hall',
-      label: 'Republic Hall',
-    },
-  ]
+
   const images = [
     {
       name: 'review',
@@ -91,7 +71,15 @@ const Sell = () => {
 const MobileSellScreen = ({ categories, setSelectedCategory, images }) => {
   const navigate = useNavigate()
   return (
-    <Box shadow="md" w="100%" bg="white" mx="auto" p={3}>
+    <Box
+      shadow="md"
+      w="100%"
+      bg="white"
+      mx="auto"
+      p={3}
+      border="1px"
+      borderColor="gray.300"
+    >
       <VStack alignItems="flex-start">
         <Select
           options={categories}
@@ -171,39 +159,10 @@ const MobileSellScreen = ({ categories, setSelectedCategory, images }) => {
             ))}
           </HStack>
         </HStack>
-        <Box>
-          <Text>
-            Where can we find you? {''}
-            <chakra.span color="gray.400" fontSize="sm">
-              eg: Ayeduase
-            </chakra.span>
-          </Text>
-          <InputGroup>
-            <InputLeftElement children={<GoLocation />} />
-            <Input type="text" placeholder="Your location" />
-          </InputGroup>
-        </Box>
-        <Box>
-          <Text>
-            How can we reach you? {''}
-            <chakra.span color="gray.400" fontSize="sm">
-              eg: 544751048
-            </chakra.span>
-          </Text>
-          <InputGroup>
-            <InputLeftAddon children="+233" />
-            <Input type="tel" placeholder="phone number" />
-          </InputGroup>
-        </Box>
-        <Box>
-          <Text>
-            Your Price? {''}
-            <chakra.span color="gray.400" fontSize="sm">
-              eg: 250
-            </chakra.span>
-          </Text>
-          <PriceInput />
-        </Box>
+        <VStack spacing={3}>
+          <SellerInfo />
+          <ProductInfo />
+        </VStack>
         <Button w="full" colorScheme="linkedin">
           POST AD
         </Button>
@@ -218,12 +177,102 @@ export default Sell
 
 function PriceInput({}) {
   return (
-    <NumberInput precision={2} defaultValue={1} min={1}>
+    <NumberInput precision={2} defaultValue={1} min={1} isRequired>
       <NumberInputField />
       <NumberInputStepper>
         <NumberIncrementStepper />
         <NumberDecrementStepper />
       </NumberInputStepper>
     </NumberInput>
+  )
+}
+
+function SellerInfo({}) {
+  return (
+    <>
+      <Box>
+        <Text>
+          Your display name {''}
+          <chakra.span color="gray.400" fontSize="sm">
+            eg: Jeron
+          </chakra.span>
+        </Text>
+        <InputGroup>
+          <InputLeftElement children={<FaRegUser />} />
+          <Input type="text" placeholder="Your seller name" />
+        </InputGroup>
+      </Box>
+      <Box>
+        <Text>
+          Where can we find you {''}
+          <chakra.span color="gray.400" fontSize="sm">
+            eg: Ayeduase
+          </chakra.span>
+        </Text>
+        <InputGroup>
+          <InputLeftElement children={<GoLocation />} />
+          <Input type="text" placeholder="Your location" />
+        </InputGroup>
+      </Box>
+      <Box>
+        <Text>
+          How can we reach you {''}
+          <chakra.span color="gray.400" fontSize="sm">
+            eg: 544751048
+          </chakra.span>
+        </Text>
+        <InputGroup>
+          <InputLeftAddon children="+233" />
+          <Input type="tel" placeholder="phone number" maxLength={9} />
+        </InputGroup>
+      </Box>
+    </>
+  )
+}
+
+function ProductInfo({}) {
+  return (
+    <>
+      {' '}
+      <Box>
+        <Text>
+          Product Name {''}
+          <chakra.span color="gray.400" fontSize="sm">
+            eg: Men's trouser
+          </chakra.span>
+        </Text>
+        <InputGroup>
+          <InputLeftElement children={<GoPackage />} />
+          <Input
+            type="text"
+            placeholder="Product name"
+            isRequired
+            maxLength={50}
+          />
+        </InputGroup>
+      </Box>
+      <Box>
+        <Text>
+          Product Description {''}
+          <chakra.span color="gray.400" fontSize="sm">
+            eg: blah blah blah
+          </chakra.span>
+        </Text>
+        <Textarea
+          placeholder="Product catchy Description"
+          isRequired
+          maxLength={200} // isInvalid={false}
+        />
+      </Box>
+      <Box>
+        <Text>
+          Product Price {''}
+          <chakra.span color="gray.400" fontSize="sm">
+            eg: 250
+          </chakra.span>
+        </Text>
+        <PriceInput />
+      </Box>
+    </>
   )
 }

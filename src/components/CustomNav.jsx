@@ -54,7 +54,7 @@ const CustomNav = () => {
       {mobile ? (
         <IconButton
           icon={<FiChevronLeft size={22} />}
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/')}
           variant="outline"
         />
       ) : (

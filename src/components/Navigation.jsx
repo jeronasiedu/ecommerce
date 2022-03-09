@@ -10,7 +10,6 @@ import {
   IconButton,
   Avatar,
   Button,
-  VStack,
   Menu,
   MenuList,
   MenuButton,
@@ -23,12 +22,14 @@ import {
   HiOutlineViewGridAdd,
   GiSellCard,
   CgMenu,
+  FiChevronLeft,
   BsBookmarkHeart,
 } from 'react-icons/all'
 import logo from '../logo.png'
 import useStore from '../utils/store'
 import Modal from '../components/Modal'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useState } from 'react'
 const Navigation = ({ type }) => {
   const [mobile] = useMediaQuery('(max-width: 768px)')
   const user = useStore((state) => state.user)
@@ -158,55 +159,75 @@ const DesktopNavigation = ({ user, onOpen, mobile, isOpen, onClose, type }) => {
 const MobileNavigation = ({ user, onOpen, mobile, isOpen, onClose, type }) => {
   const { name } = useParams()
   const navigate = useNavigate()
-
+  const [openSearch, setOpenSearch] = useState(false)
   return (
-    <VStack
-      p={2.5}
-      shadow="sm"
-      pos="sticky"
-      top="0"
-      left="0"
-      zIndex={999}
-      w="full"
-      bg="white"
-      transition="0.5s cubic-bezier(0.23, 1, 0.320, 1)"
-      backdropFilter="blur(0.4rem)"
-      mb={2}
-    >
+    <>
       <Modal isOpen={isOpen} onClose={onClose} mobile={mobile} />
 
-      <HStack alignSelf="flex-start" w="full">
-        <Image
-          src={logo}
-          alt="logo"
-          minW="5.2rem"
-          w="5.2rem"
-          cursor="pointer"
-          onClick={() => navigate('/')}
-        />
-        <Spacer />
-        {user ? (
-          <SideMenu navigate={navigate} />
+      <HStack
+        alignSelf="flex-start"
+        w="full"
+        p={2.5}
+        shadow="sm"
+        pos="sticky"
+        top="0"
+        left="0"
+        zIndex={999}
+        bg="white"
+        transition="0.5s cubic-bezier(0.23, 1, 0.320, 1)"
+        backdropFilter="blur(0.4rem)"
+        mb={2}
+      >
+        {openSearch ? (
+          <InputGroup variant="outline">
+            <InputLeftElement
+              onClick={() => setOpenSearch(false)}
+              children={<FiChevronLeft />}
+              color="gray.600"
+            />
+            <Input
+              type="search"
+              placeholder={
+                name && type === 'category'
+                  ? `Start Searching in ${name}`
+                  : 'Start Searching'
+              }
+            />
+          </InputGroup>
         ) : (
-          <Avatar size="sm" onClick={onOpen} />
+          <>
+            <Image
+              src={logo}
+              alt="logo"
+              minW="5.2rem"
+              w="5.2rem"
+              cursor="pointer"
+              onClick={() => navigate('/')}
+            />
+            <Spacer />
+            {user ? (
+              <>
+                <IconButton
+                  icon={<ImSearch />}
+                  variant="outline"
+                  onClick={() => setOpenSearch(true)}
+                />
+                <SideMenu navigate={navigate} />
+              </>
+            ) : (
+              <>
+                <IconButton
+                  icon={<ImSearch />}
+                  variant="outline"
+                  onClick={() => setOpenSearch(true)}
+                />
+                <Avatar size="sm" onClick={onOpen} />
+              </>
+            )}
+          </>
         )}
       </HStack>
-      <InputGroup variant="outline">
-        <InputLeftElement
-          pointerEvents="none"
-          children={<ImSearch />}
-          color="gray.600"
-        />
-        <Input
-          type="search"
-          placeholder={
-            name && type === 'category'
-              ? `Start Searching in ${name}`
-              : 'Start Searching'
-          }
-        />
-      </InputGroup>
-    </VStack>
+    </>
   )
 }
 export default Navigation
