@@ -69,7 +69,13 @@ const CustomNav = () => {
       )}
 
       <Spacer />
-      <Heading textTransform="uppercase" letterSpacing="1px" size="md">
+      <Heading
+        textTransform="uppercase"
+        letterSpacing="1px"
+        size="md"
+        bgGradient="linear(to-r,#4776e6,#ec00cd)"
+        bgClip="text"
+      >
         {url}
       </Heading>
       <Spacer />
