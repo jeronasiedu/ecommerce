@@ -205,24 +205,15 @@ const MobileNavigation = ({ user, onOpen, mobile, isOpen, onClose, type }) => {
               onClick={() => navigate('/')}
             />
             <Spacer />
+            <IconButton
+              icon={<ImSearch />}
+              variant="outline"
+              onClick={() => setOpenSearch(true)}
+            />
             {user ? (
-              <>
-                <IconButton
-                  icon={<ImSearch />}
-                  variant="outline"
-                  onClick={() => setOpenSearch(true)}
-                />
-                <SideMenu navigate={navigate} />
-              </>
+              <SideMenu navigate={navigate} />
             ) : (
-              <>
-                <IconButton
-                  icon={<ImSearch />}
-                  variant="outline"
-                  onClick={() => setOpenSearch(true)}
-                />
-                <Avatar size="sm" onClick={onOpen} />
-              </>
+              <Avatar size="sm" onClick={onOpen} />
             )}
           </>
         )}
