@@ -10,6 +10,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import 'swiper/css/autoplay'
 import 'swiper/css/effect-fade'
+import { Toaster } from 'react-hot-toast'
 const theme = extendTheme({
   fonts: {
     body: 'poppins',
@@ -28,6 +29,7 @@ ReactDOM.render(
         initialColorMode={theme.config.initialColorMode}
       ></ColorModeScript>
       <App />
+      <Toaster />
     </ChakraProvider>
   </BrowserRouter>,
   document.getElementById('root')

@@ -81,8 +81,8 @@ const Categories = () => {
   const mobileCategories = [
     { name: 'Apparel', imageUrl: 'images/fashion-mb.jpg' },
     { name: 'Electronics', imageUrl: 'images/electronics-mb.jpg' },
-    { name: 'Smart Phones', imageUrl: 'images/iphone13.png' },
-    { name: 'Services', imageUrl: 'images/electronics-mb.jpg' },
+    { name: 'Smart Phones', imageUrl: 'images/mobile.jpg' },
+    { name: 'Services', imageUrl: 'images/services.jpg' },
   ]
   return (
     <>

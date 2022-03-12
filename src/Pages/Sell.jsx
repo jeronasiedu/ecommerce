@@ -8,7 +8,6 @@ import {
   Text,
   useMediaQuery,
   VStack,
-  Circle,
   chakra,
   InputGroup,
   InputLeftAddon,
@@ -23,9 +22,11 @@ import {
 } from '@chakra-ui/react'
 import Select from 'react-select'
 import { useState } from 'react'
-import { MdCancel, ImImage } from 'react-icons/all'
+import { VscTrash, ImImage } from 'react-icons/all'
 import { useNavigate } from 'react-router-dom'
-import { GoLocation, FaRegUser, GoPackage } from 'react-icons/all'
+import { GoLocation, FaRegUser, GoPackage, BiRecycle } from 'react-icons/all'
+import ImageUploading from 'react-images-uploading'
+import toast from 'react-hot-toast'
 const Sell = () => {
   const [mobile] = useMediaQuery('(max-width:760px)')
   const categories = [
@@ -34,26 +35,39 @@ const Sell = () => {
     { value: 'Smart Phones', label: 'Smart Phones' },
     { value: 'Services', label: 'Services' },
   ]
-  const [selectedCategory, setSelectedCategory] = useState(null)
-
-  const images = [
-    {
-      name: 'review',
-      src: '/images/review5.jpg',
-    },
-    {
-      name: 'review',
-      src: '/images/review8.jpg',
-    },
-    {
-      name: 'review',
-      src: '/images/review5.jpg',
-    },
-    {
-      name: 'review',
-      src: '/images/review9.jpg',
-    },
-  ]
+  const [selectedCategory, setSelectedCategory] = useState({
+    selectedCategory: null,
+  })
+  const [images, setImages] = useState([])
+  const [disableField, setDisableField] = useState(true)
+  const [disableImageUpload, setDisableImageUpload] = useState(true)
+  const saveImage = (imageList, addUpdateIndex) => {
+    // data for submit
+    setImages(imageList)
+    if (imageList.length > 0) {
+      setDisableField(false)
+    } else {
+      setDisableField(true)
+    }
+  }
+  const handleImageError = (errors, files) => {
+    let errorMessage = 'There was an error uploading image try another one'
+    const { maxFileSize, resolution, maxNumber } = errors
+    if (maxFileSize) {
+      errorMessage = 'Max file size exceeded, try a different image'
+    } else if (resolution) {
+      errorMessage = 'Image size is too small, try a bigger one'
+    } else if (maxNumber) {
+      errorMessage = 'Maximum number of images reached'
+    }
+    toast.error(errorMessage)
+  }
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category)
+    if (category.value) {
+      setDisableImageUpload(false)
+    }
+  }
   return (
     <Box>
       {mobile ? (
@@ -61,6 +75,11 @@ const Sell = () => {
           categories={categories}
           setSelectedCategory={setSelectedCategory}
           images={images}
+          saveImage={saveImage}
+          handleImageError={handleImageError}
+          handleCategoryChange={handleCategoryChange}
+          disableField={disableField}
+          disableImageUpload={disableImageUpload}
         />
       ) : (
         <DesktopSellScreen />
@@ -68,7 +87,16 @@ const Sell = () => {
     </Box>
   )
 }
-const MobileSellScreen = ({ categories, setSelectedCategory, images }) => {
+const MobileSellScreen = ({
+  categories,
+  setSelectedCategory,
+  images,
+  saveImage,
+  handleImageError,
+  handleCategoryChange,
+  disableField,
+  disableImageUpload,
+}) => {
   const navigate = useNavigate()
   return (
     <Box
@@ -83,89 +111,121 @@ const MobileSellScreen = ({ categories, setSelectedCategory, images }) => {
       <VStack alignItems="flex-start">
         <Select
           options={categories}
-          onChange={setSelectedCategory}
+          onChange={handleCategoryChange}
+          value={categories.selectedCategory}
           className="select-mobile"
           aria-label="Select filter for category"
           placeholder="Category *"
+          noOptionsMessage="No category found"
         />
         <Box>
-          <Text fontWeight="semibold">Add Photo</Text>
+          <Text
+            fontWeight="semibold"
+            color={disableImageUpload ? 'gray.500' : 'black'}
+          >
+            Add Photo
+          </Text>
           <Text fontSize="sm" color="gray.500">
             Add at least 1 photo for this category
           </Text>
           <Text fontSize="xs" color="gray.500">
-            First Picture - is the title picture
+            First Picture - is the title picture.
           </Text>
         </Box>
-        <HStack w="full" p={1}>
-          <form>
-            <Circle
-              as="label"
-              htmlFor="image"
-              boxSize="5rem"
-              bg="blue.400"
-              rounded="sm"
-              variant="outline"
-              colorScheme="linkedin"
-            >
-              <ImImage size={30} color="#fff" />
-            </Circle>
-            <input
-              type="file"
-              name="product-image"
-              id="image"
-              accept=".jpg,.png"
-              multiple
-              style={{
-                display: 'none',
-              }}
-            />
-          </form>
-          <HStack
-            overflowX="scroll"
-            w="auto"
-            overflowY={'hidden'}
-            scrollSnapType="x mandatory"
-          >
-            {images.map((image, i) => (
-              <Box
+        <ImageUploading
+          multiple
+          value={images}
+          onChange={saveImage}
+          maxNumber={5}
+          dataURLKey="data_url"
+          acceptType={['jpg', 'png']}
+          onError={handleImageError}
+          maxFileSize={5242880}
+          resolutionWidth={1000}
+          resolutionHeight={750}
+          resolutionType="more"
+        >
+          {({
+            imageList,
+            onImageUpload,
+            onImageRemoveAll,
+            onImageUpdate,
+            onImageRemove,
+            isDragging,
+            dragProps,
+          }) => (
+            <HStack w="full" p={1}>
+              <IconButton
                 boxSize="5rem"
-                minW="5rem"
-                pos="relative"
-                role="group"
-                key={i}
-                scrollSnapAlign="start"
+                rounded="sm"
+                variant="solid"
+                onClick={onImageUpload}
+                colorScheme="linkedin"
+                isDisabled={disableImageUpload}
               >
-                <chakra.span
-                  pos="absolute"
-                  right="0.5"
-                  top="0.5"
-                  color="gray.500"
-                  transition="0.5s cubic-bezier(0.23, 1, 0.320, 1)"
-                  opacity="0"
-                  _groupHover={{
-                    opacity: '1',
-                  }}
-                >
-                  <MdCancel size={24} />
-                </chakra.span>
-                <Image
-                  src={image.src}
-                  alt="review5"
-                  boxSize="full"
-                  objectFit="cover"
-                />
-              </Box>
-            ))}
-          </HStack>
-        </HStack>
-        <VStack spacing={3}>
-          <SellerInfo />
-          <ProductInfo />
+                <ImImage size={30} color="#fff" />
+              </IconButton>
+              <HStack
+                overflowX="scroll"
+                w="auto"
+                overflowY={'hidden'}
+                scrollSnapType="x mandatory"
+              >
+                {imageList.map((image, key) => (
+                  <Box
+                    key={key}
+                    boxSize="5rem"
+                    minW="5rem"
+                    pos="relative"
+                    role="group"
+                    scrollSnapAlign="start"
+                  >
+                    <IconButton
+                      icon={<BiRecycle size={18} />}
+                      size="xs"
+                      pos="absolute"
+                      left="0.5"
+                      top="1"
+                      variant="ghost"
+                      colorScheme="blue"
+                      isRound
+                      onClick={() => onImageUpdate(key)}
+                      transition="0.5s cubic-bezier(0.23, 1, 0.320, 1)"
+                    />
+                    <IconButton
+                      icon={<VscTrash size={18} />}
+                      size="xs"
+                      pos="absolute"
+                      right="0.5"
+                      top="1"
+                      variant="ghost"
+                      colorScheme="red"
+                      isRound
+                      transition="0.5s cubic-bezier(0.23, 1, 0.320, 1)"
+                      onClick={() => onImageRemove(key)}
+                    />
+                    <Image
+                      src={image['data_url']}
+                      alt="review5"
+                      boxSize="full"
+                      objectFit="cover"
+                    />
+                  </Box>
+                ))}
+              </HStack>
+            </HStack>
+          )}
+        </ImageUploading>
+        <VStack spacing={3} w="full">
+          <SellerInfo disableField={disableField} />
+          <ProductInfo disableField={disableField} />
         </VStack>
         <Button w="full" colorScheme="linkedin">
           POST AD
         </Button>
+        <Text fontSize="sm" color="gray.500">
+          By posting this ad, you agree to J-MART terms and conditions
+        </Text>
       </VStack>
     </Box>
   )
@@ -175,23 +235,32 @@ const DesktopSellScreen = () => {
 }
 export default Sell
 
-function PriceInput({}) {
+function PriceInput({ disableField }) {
   return (
-    <NumberInput precision={2} defaultValue={1} min={1} isRequired>
-      <NumberInputField />
-      <NumberInputStepper>
-        <NumberIncrementStepper />
-        <NumberDecrementStepper />
-      </NumberInputStepper>
-    </NumberInput>
+    <InputGroup>
+      <InputLeftAddon children="GH₵" />
+      <NumberInput
+        precision={2}
+        defaultValue={1}
+        min={1}
+        isRequired
+        isDisabled={disableField}
+      >
+        <NumberInputField roundedTopStart="none" roundedBottomStart="none" />
+        <NumberInputStepper>
+          <NumberIncrementStepper />
+          <NumberDecrementStepper />
+        </NumberInputStepper>
+      </NumberInput>
+    </InputGroup>
   )
 }
 
-function SellerInfo({}) {
+function SellerInfo({ disableField }) {
   return (
     <>
-      <Box>
-        <Text>
+      <Box w="full">
+        <Text color={disableField ? 'gray.500' : 'black'}>
           Your display name {''}
           <chakra.span color="gray.400" fontSize="sm">
             eg: Jeron
@@ -199,11 +268,16 @@ function SellerInfo({}) {
         </Text>
         <InputGroup>
           <InputLeftElement children={<FaRegUser />} />
-          <Input type="text" placeholder="Your seller name" />
+          <Input
+            type="text"
+            placeholder="Your selling name"
+            maxLength={20}
+            isDisabled={disableField}
+          />
         </InputGroup>
       </Box>
-      <Box>
-        <Text>
+      <Box w="full">
+        <Text color={disableField ? 'gray.500' : 'black'}>
           Where can we find you {''}
           <chakra.span color="gray.400" fontSize="sm">
             eg: Ayeduase
@@ -211,11 +285,16 @@ function SellerInfo({}) {
         </Text>
         <InputGroup>
           <InputLeftElement children={<GoLocation />} />
-          <Input type="text" placeholder="Your location" />
+          <Input
+            type="text"
+            placeholder="Your location"
+            maxLength={30}
+            isDisabled={disableField}
+          />
         </InputGroup>
       </Box>
-      <Box>
-        <Text>
+      <Box w="full">
+        <Text color={disableField ? 'gray.500' : 'black'}>
           How can we reach you {''}
           <chakra.span color="gray.400" fontSize="sm">
             eg: 544751048
@@ -223,19 +302,23 @@ function SellerInfo({}) {
         </Text>
         <InputGroup>
           <InputLeftAddon children="+233" />
-          <Input type="tel" placeholder="phone number" maxLength={9} />
+          <Input
+            type="tel"
+            placeholder="Phone number"
+            maxLength={9}
+            isDisabled={disableField}
+          />
         </InputGroup>
       </Box>
     </>
   )
 }
 
-function ProductInfo({}) {
+function ProductInfo({ disableField }) {
   return (
     <>
-      {' '}
-      <Box>
-        <Text>
+      <Box w="full">
+        <Text color={disableField ? 'gray.500' : 'black'}>
           Product Name {''}
           <chakra.span color="gray.400" fontSize="sm">
             eg: Men's trouser
@@ -248,11 +331,12 @@ function ProductInfo({}) {
             placeholder="Product name"
             isRequired
             maxLength={50}
+            isDisabled={disableField}
           />
         </InputGroup>
       </Box>
-      <Box>
-        <Text>
+      <Box w="full">
+        <Text color={disableField ? 'gray.500' : 'black'}>
           Product Description {''}
           <chakra.span color="gray.400" fontSize="sm">
             eg: blah blah blah
@@ -262,16 +346,17 @@ function ProductInfo({}) {
           placeholder="Product catchy Description"
           isRequired
           maxLength={200} // isInvalid={false}
+          isDisabled={disableField}
         />
       </Box>
-      <Box>
-        <Text>
+      <Box w="full">
+        <Text color={disableField ? 'gray.500' : 'black'}>
           Product Price {''}
           <chakra.span color="gray.400" fontSize="sm">
             eg: 250
           </chakra.span>
         </Text>
-        <PriceInput />
+        <PriceInput disableField={disableField} />
       </Box>
     </>
   )

@@ -15,10 +15,6 @@ import { Link } from 'react-router-dom'
 const Banner = () => {
   const images = [
     {
-      url: '/images/review1.jpg',
-      alt: 'picture',
-    },
-    {
       url: '/images/review2.jpg',
       alt: 'picture',
     },
