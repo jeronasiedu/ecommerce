@@ -43,7 +43,7 @@ const Sell = () => {
     }
   }
   const handleImageError = (errors, files) => {
-    let errorMessage = 'There was an error uploading image try another one'
+    let errorMessage = `There was an error uploading image try another one ${errors}`
     const { maxFileSize, resolution, maxNumber } = errors
     if (maxFileSize) {
       errorMessage = 'Max file size exceeded, try a different image'
