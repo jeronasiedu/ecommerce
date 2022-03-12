@@ -19,6 +19,7 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Textarea,
+  Heading,
 } from '@chakra-ui/react'
 import Select from 'react-select'
 import { useState } from 'react'
@@ -64,9 +65,10 @@ const Sell = () => {
   }
   const handleCategoryChange = (category) => {
     setSelectedCategory(category)
-    if (category.value) {
-      setDisableImageUpload(false)
+    if (mobile && category.value) {
+      return setDisableImageUpload(false)
     }
+    setDisableField(false)
   }
   return (
     <Box>
@@ -82,14 +84,85 @@ const Sell = () => {
           disableImageUpload={disableImageUpload}
         />
       ) : (
-        <DesktopSellScreen />
+        <DesktopSellScreen
+          categories={categories}
+          setSelectedCategory={setSelectedCategory}
+          images={images}
+          saveImage={saveImage}
+          handleImageError={handleImageError}
+          handleCategoryChange={handleCategoryChange}
+          disableField={disableField}
+          disableImageUpload={disableImageUpload}
+        />
       )}
     </Box>
   )
 }
+const DesktopSellScreen = ({
+  categories,
+  images,
+  saveImage,
+  handleImageError,
+  handleCategoryChange,
+  disableField,
+  disableImageUpload,
+}) => {
+  return (
+    <VStack
+      alignItems="flex-start"
+      shadow="md"
+      border="1px"
+      borderColor="gray.300"
+      mx="auto"
+      p={3}
+    >
+      <Heading
+        textAlign="center"
+        size="lg"
+        textTransform="capitalize"
+        fontWeight="bold"
+      >
+        post Ad
+      </Heading>
+      <HStack w="full">
+        <Select
+          options={categories}
+          onChange={handleCategoryChange}
+          value={categories.selectedCategory}
+          className="select-mobile"
+          aria-label="Select filter for category"
+          placeholder="Category *"
+        />
+
+        <InputGroup>
+          <InputLeftElement children={<GoLocation />} />
+          <Input
+            type="text"
+            placeholder="Your Location"
+            maxLength={30}
+            isDisabled={disableField}
+          />
+        </InputGroup>
+      </HStack>
+      <Box>
+        <Text
+          fontWeight="semibold"
+          color={disableImageUpload ? 'gray.500' : 'black'}
+        >
+          Add Photo
+        </Text>
+        <Text fontSize="sm" color="gray.500">
+          Add at least 1 photo for this category
+        </Text>
+        <Text fontSize="xs" color="gray.500">
+          First Picture - is the title picture.
+        </Text>
+      </Box>
+    </VStack>
+  )
+}
 const MobileSellScreen = ({
   categories,
-  setSelectedCategory,
   images,
   saveImage,
   handleImageError,
@@ -116,7 +189,6 @@ const MobileSellScreen = ({
           className="select-mobile"
           aria-label="Select filter for category"
           placeholder="Category *"
-          noOptionsMessage="No category found"
         />
         <Box>
           <Text
@@ -224,15 +296,15 @@ const MobileSellScreen = ({
           POST AD
         </Button>
         <Text fontSize="sm" color="gray.500">
-          By posting this ad, you agree to J-MART terms and conditions
+          By clicking on Post Ad, you accept the Terms of Use, confirm that you
+          will abide by the Safety Tips, and declare that this posting does not
+          include any Prohibited Items.
         </Text>
       </VStack>
     </Box>
   )
 }
-const DesktopSellScreen = () => {
-  return <Box>Desktop Sell Screen</Box>
-}
+
 export default Sell
 
 function PriceInput({ disableField }) {
@@ -270,7 +342,7 @@ function SellerInfo({ disableField }) {
           <InputLeftElement children={<FaRegUser />} />
           <Input
             type="text"
-            placeholder="Your selling name"
+            placeholder="Your Name"
             maxLength={20}
             isDisabled={disableField}
           />
@@ -287,7 +359,7 @@ function SellerInfo({ disableField }) {
           <InputLeftElement children={<GoLocation />} />
           <Input
             type="text"
-            placeholder="Your location"
+            placeholder="Your Location"
             maxLength={30}
             isDisabled={disableField}
           />
@@ -304,7 +376,7 @@ function SellerInfo({ disableField }) {
           <InputLeftAddon children="+233" />
           <Input
             type="tel"
-            placeholder="Phone number"
+            placeholder="Your Phone number"
             maxLength={9}
             isDisabled={disableField}
           />
@@ -328,7 +400,7 @@ function ProductInfo({ disableField }) {
           <InputLeftElement children={<GoPackage />} />
           <Input
             type="text"
-            placeholder="Product name"
+            placeholder="Product Name"
             isRequired
             maxLength={50}
             isDisabled={disableField}
@@ -347,6 +419,7 @@ function ProductInfo({ disableField }) {
           isRequired
           maxLength={200} // isInvalid={false}
           isDisabled={disableField}
+          minH="8rem"
         />
       </Box>
       <Box w="full">
