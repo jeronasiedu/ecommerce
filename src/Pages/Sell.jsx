@@ -124,6 +124,7 @@ export function ImageUploadComponent({
         <HStack w="full" p={1}>
           <IconButton
             boxSize="5rem"
+            minW="5rem"
             rounded="sm"
             variant="solid"
             onClick={onImageUpload}
