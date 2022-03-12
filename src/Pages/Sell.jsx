@@ -108,9 +108,9 @@ export function ImageUploadComponent({
       acceptType={['jpg', 'png']}
       onError={handleImageError}
       maxFileSize={5242880}
-      resolutionWidth={1000}
-      resolutionHeight={750}
-      resolutionType="more"
+      // resolutionWidth={1000}
+      // resolutionHeight={750}
+      // resolutionType="more"
     >
       {({
         imageList,
