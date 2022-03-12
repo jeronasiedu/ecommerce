@@ -43,16 +43,16 @@ const Sell = () => {
     }
   }
   const handleImageError = (errors, files) => {
-    let errorMessage = `There was an error uploading image try another one ${JSON.stringify(
-      errors
-    )}`
-    const { maxFileSize, resolution, maxNumber } = errors
+    let errorMessage = `There was an error uploading image try another one`
+    const { maxFileSize, resolution, maxNumber, acceptType } = errors
     if (maxFileSize) {
       errorMessage = 'Max file size exceeded, try a different image'
     } else if (resolution) {
       errorMessage = 'Image size is too small, try a bigger one'
     } else if (maxNumber) {
       errorMessage = 'Maximum number of images reached'
+    } else if (acceptType) {
+      errorMessage = 'Image type is not supported try jpg or png'
     }
     toast.error(errorMessage)
   }
@@ -107,7 +107,7 @@ export function ImageUploadComponent({
       onChange={saveImage}
       maxNumber={5}
       dataURLKey="data_url"
-      acceptType={['jpg', 'png']}
+      acceptType={['jpg', 'png', 'jpeg']}
       onError={handleImageError}
       maxFileSize={5242880}
       // resolutionWidth={1000}
