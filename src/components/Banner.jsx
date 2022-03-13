@@ -111,8 +111,8 @@ const Banner = () => {
           delay: 2500,
           disableOnInteraction: false,
         }}
-        navigation={true}
-        loop={true}
+        navigation
+        loop
         effect="fade"
       >
         {images.map((image, i) => (
