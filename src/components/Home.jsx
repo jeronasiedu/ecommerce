@@ -64,7 +64,7 @@ const Home = () => {
           rounded="md"
           className="line"
           d={['none', 'inline-flex']}
-        ></Box>
+         />
       </HStack>
       <SimpleGrid minChildWidth={['150px', '200px']} spacing={3} mb="2">
         {products.map((product, idx) => (
@@ -80,7 +80,7 @@ const Home = () => {
           rounded="md"
           className="line"
           d={['none', 'inline-flex']}
-        ></Box>
+         />
       </HStack>
       <SimpleGrid minChildWidth={['150px', '200px']} spacing={3} mb="2">
         {products.map((product, idx) => (
