@@ -55,7 +55,7 @@ const Home = () => {
   ]
   return (
     <Box my="7">
-      <HStack>
+      {/* <HStack>
         <Heading mb="2" size="md" textTransform="uppercase">
           Just For You
         </Heading>
@@ -65,12 +65,12 @@ const Home = () => {
           className="line"
           d={['none', 'inline-flex']}
          />
-      </HStack>
-      <SimpleGrid minChildWidth={['150px', '200px']} spacing={3} mb="2">
+      </HStack> */}
+      {/* <SimpleGrid minChildWidth={['150px', '200px']} spacing={3} mb="2">
         {products.map((product, idx) => (
           <SingleProduct {...product} key={idx} />
         ))}
-      </SimpleGrid>
+      </SimpleGrid> */}
       <HStack mt="5">
         <Heading mb="2" size="md" textTransform="uppercase">
           Trending Ads
@@ -80,7 +80,7 @@ const Home = () => {
           rounded="md"
           className="line"
           d={['none', 'inline-flex']}
-         />
+        />
       </HStack>
       <SimpleGrid minChildWidth={['150px', '200px']} spacing={3} mb="2">
         {products.map((product, idx) => (
