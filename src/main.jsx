@@ -27,7 +27,7 @@ ReactDOM.render(
     <ChakraProvider theme={theme}>
       <ColorModeScript
         initialColorMode={theme.config.initialColorMode}
-      ></ColorModeScript>
+       />
       <App />
       <Toaster />
     </ChakraProvider>

@@ -231,7 +231,7 @@ export function SideMenu() {
         as={IconButton}
         icon={<CgMenu />}
         variant="outline"
-      ></MenuButton>
+       />
       <MenuList>
         <MenuItem onClick={() => navigate('/profile')}>
           <Avatar src="/images/user.jpg" alt="user" size="sm" />
