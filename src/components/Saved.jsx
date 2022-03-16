@@ -7,62 +7,92 @@ import {
   Divider,
   Spacer,
   IconButton,
+  Heading,
 } from '@chakra-ui/react'
-import { BsBookmarks } from 'react-icons/all'
+import { BsTrash } from 'react-icons/all'
 import useStore from '../utils/store'
+import { AnimatePresence, motion } from 'framer-motion'
 const Saved = () => {
   const savedProducts = useStore((state) => state.savedProducts)
   const removeItem = useStore((state) => state.removeItem)
   return (
     <Box w="full" p={[2, 3]}>
-      <VStack alignItems="flex-start" w="full">
-        <Divider />
-        {savedProducts.map((item, idx) => (
-          <VStack w="full" key={idx}>
-            <HStack h="full" w="full">
-              <Box
+      {savedProducts.length > 0 ? (
+        <VStack alignItems="flex-start" w="full">
+          <Divider />
+          <AnimatePresence>
+            {savedProducts.map((item, idx) => (
+              <HStack
                 h="full"
-                maxH="9rem"
-                w="30%"
-                maxW="14rem"
-                rounded="sm"
-                overflow="hidden"
-                minW="5rem"
+                w="full"
+                key={idx}
+                borderBottom="1px"
+                borderColor="gray.400"
+                pb={2}
+                as={motion.div}
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                exit={{
+                  opacity: 0,
+                  rotateZ: -10,
+                  transformOrigin: 'right',
+                }}
               >
-                <Image
-                  src={item.image}
-                  alt="something"
-                  objectFit="cover"
-                  boxSize="full"
-                />
-              </Box>
-              <VStack alignItems="flex-start" spacing="0">
-                <Text fontSize={['sm', 'md', 'xl']} color="gray.600">
-                  Evelyn Garza
-                </Text>
-                <Text fontSize={['md', 'xl', '2xl']} color="">
-                  {item.name}
-                </Text>
-                <Text
-                  fontWeight="bold"
-                  color="blue.300"
-                  fontSize={['md', 'xl', '2xl']}
+                <Box
+                  w={['8rem', '9rem', '11rem']}
+                  h={['6rem', '7rem', '10rem']}
+                  rounded="sm"
+                  overflow="hidden"
                 >
-                  GH₵ {item.price}
-                </Text>
-              </VStack>
-              <Spacer />
-              <IconButton
-                icon={<BsBookmarks />}
-                isRound
-                colorScheme="linkedin"
-                onClick={() => removeItem(item.id)}
-              />
-            </HStack>
-            <Divider />
-          </VStack>
-        ))}
-      </VStack>
+                  <Image
+                    src={item.image}
+                    alt="something"
+                    objectFit="cover"
+                    boxSize="full"
+                  />
+                </Box>
+                <VStack alignItems="flex-start" spacing="0">
+                  <Text fontSize={['sm', 'md', 'xl']} color="gray.600">
+                    Evelyn Garza
+                  </Text>
+                  <Text fontSize={['md', 'xl', '2xl']} color="">
+                    {item.name}
+                  </Text>
+                  <Text
+                    fontWeight="bold"
+                    color="blue.300"
+                    fontSize={['md', 'xl', '2xl']}
+                  >
+                    GH₵ {item.price}
+                  </Text>
+                </VStack>
+                <Spacer />
+                <IconButton
+                  icon={<BsTrash size={20} />}
+                  colorScheme="orange"
+                  onClick={() => removeItem(item.id)}
+                />
+              </HStack>
+            ))}
+          </AnimatePresence>
+        </VStack>
+      ) : (
+        <Heading
+          textAlign="center"
+          size="md"
+          bgClip="text"
+          bgGradient="linear(to-r, #0055ff, #ab1766)"
+          as={motion.h1}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          Products you save will appear here
+        </Heading>
+      )}
     </Box>
   )
 }
