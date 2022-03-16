@@ -1,5 +1,7 @@
+import { Box } from '@chakra-ui/react'
+
 const Adverts = () => {
-  return <div>Adverts</div>
+  return <p>Adverts</p>
 }
 
 export default Adverts

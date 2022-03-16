@@ -2,7 +2,6 @@ import useStore from './store'
 import { Navigate } from 'react-router-dom'
 import { Container } from '@chakra-ui/react'
 import CustomNav from '../components/CustomNav'
-import { Navigation } from '../components'
 const Protect = ({ target }) => {
   const user = useStore((state) => state.user)
   const onOpen = useStore((state) => state.onOpen)
