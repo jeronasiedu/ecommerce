@@ -81,17 +81,27 @@ const Saved = () => {
           </AnimatePresence>
         </VStack>
       ) : (
-        <Heading
-          textAlign="center"
-          size="md"
-          bgClip="text"
-          bgGradient="linear(to-r, #0055ff, #ab1766)"
-          as={motion.h1}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-        >
-          Products you save will appear here
-        </Heading>
+        <VStack>
+          <Image
+            src="/images/emptycart.svg"
+            alt="empty cart"
+            w={['full', '80%', '60%', '30rem']}
+            as={motion.img}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          />
+          <Heading
+            textAlign="center"
+            size="md"
+            bgClip="text"
+            bgGradient="linear(to-r, #0055ff, #ab1766)"
+            as={motion.h1}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            Products you save will appear here
+          </Heading>
+        </VStack>
       )}
     </Box>
   )
